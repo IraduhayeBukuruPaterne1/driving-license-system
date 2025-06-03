@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>License Application</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f6f9;
+      margin: 0;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      display: flex;
+      max-width: 900px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .form-section {
+      padding: 40px;
+      width: 60%;
+    }
+
+    .preview-section {
+      background: #e9ecef;
+      padding: 40px;
+      width: 40%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    input[type="file"] {
+      margin-top: 6px;
+    }
+
+    button {
+      margin-top: 24px;
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .photo-preview {
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background-color: #dee2e6;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .file-label {
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Left: Form -->
+    <div class="form-section">
+      <h2>License Application Form</h2>
+      <form id="applicationForm">
+        <label for="nid">National ID:</label>
+        <input type="text" id="nid" name="nid" required />
+
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="category">License Category:</label>
+        <select id="category" name="category" required>
+          <option value="">Select Category</option>
+          <option value="A">Category A</option>
+          <option value="B">Category B</option>
+          <option value="C">Category C</option>
+        </select>
+
+        <label for="testDate">Test Date:</label>
+        <input type="date" id="testDate" name="testDate" required />
+
+        <label for="certificate">Driving School Certificate:</label>
+        <input type="file" id="certificate" name="certificate" accept=".pdf,.jpg,.jpeg,.png" required />
+
+        <label for="photo">Passport Photo:</label>
+        <input type="file" id="photo" name="photo" accept="image/*" onchange="previewPhoto()" required />
+
+        <button type="submit">Submit Application</button>
+      </form>
+    </div>
+
+    <!-- Right: Photo Preview -->
+    <div class="preview-section">
+      <div class="photo-preview" id="photoPreview"></div>
+      <p class="file-label">Uploaded passport photo will appear here</p>
+    </div>
+  </div>
+
+  <script>
+    function previewPhoto() {
+      const file = document.getElementById('photo').files[0];
+      const preview = document.getElementById('photoPreview');
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          preview.style.backgroundImage = `url(${reader.result})`;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.style.backgroundImage = '';
+      }
+    }
+  </script>
+
+</body>
+</html>
+ 

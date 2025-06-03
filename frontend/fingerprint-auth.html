@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fingerprint Verification</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f3f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .fingerprint-box {
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      width: 400px;
+    }
+
+    .fingerprint-box h2 {
+      color: #004080;
+      margin-bottom: 20px;
+    }
+
+    .fingerprint-img {
+      width: 150px;
+      height: 150px;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Fingerprint_picture.svg/2048px-Fingerprint_picture.svg.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      margin: 20px auto;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .fingerprint-img:hover {
+      transform: scale(1.05);
+    }
+
+    .status {
+      margin-top: 20px;
+      font-size: 16px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="fingerprint-box">
+    <h2>Fingerprint Verification</h2>
+    <p>Please place your finger on the scanner below to verify your identity:</p>
+    <div class="fingerprint-img" onclick="simulateFingerprint()"></div>
+    <div class="status" id="statusText"></div>
+  </div>
+
+  <script>
+    function simulateFingerprint() {
+      const status = document.getElementById("statusText");
+      status.textContent = "✅ Identity verified successfully!";
+      setTimeout(() => {
+        window.location.href = "qr-verification.html";
+      }, 1500);
+    }
+  </script>
+</body>
+</html>
