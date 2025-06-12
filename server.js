@@ -1,40 +1,34 @@
 const express = require('express');
 const axios = require('axios');
 const qs = require('querystring');
+const path = require('path');
 
 const app = express();
 const PORT = 3000;
 
-// Replace with your values
-const CLIENT_ID = 'health-client';
-const CLIENT_SECRET = 'secret'; // usually not needed in demo
-const REDIRECT_URI = 'http://localhost:3000/callback';
-const TOKEN_URL = 'http://localhost:8080/esignet/token';
-const USERINFO_URL = 'http://localhost:8080/esignet/userinfo';
+// Serve login.html from root
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'login.html'));
+});
 
+// OAuth2 Callback
 app.get('/callback', async (req, res) => {
   const code = req.query.code;
 
   try {
-    // Exchange code for token
-    const tokenResponse = await axios.post(TOKEN_URL, qs.stringify({
+    const tokenResponse = await axios.post('http://localhost:8080/esignet/token', qs.stringify({
       grant_type: 'authorization_code',
       code: code,
-      redirect_uri: REDIRECT_URI,
-      client_id: CLIENT_ID
+      redirect_uri: 'http://localhost:3000/callback',
+      client_id: 'health-client'
     }), {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     });
 
     const accessToken = tokenResponse.data.access_token;
 
-    // Fetch user info
-    const userResponse = await axios.get(USERINFO_URL, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
+    const userResponse = await axios.get('http://localhost:8080/esignet/userinfo', {
+      headers: { Authorization: `Bearer ${accessToken}` }
     });
 
     const user = userResponse.data;
@@ -48,11 +42,11 @@ app.get('/callback', async (req, res) => {
     `);
 
   } catch (error) {
-    console.error('Error during callback:', error.response?.data || error.message);
-    res.send(`<h3>Error: ${error.message}</h3>`);
+    console.error('Callback error:', error.response?.data || error.message);
+    res.send(`<h3>Login Failed: ${error.message}</h3>`);
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`✅ Server running at http://localhost:${PORT}`);
 });
