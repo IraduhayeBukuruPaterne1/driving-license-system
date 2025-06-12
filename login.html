@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login with eSignet</title>
+</head>
+<body>
+  <h2>Login with National ID</h2>
+  <form id="login-form">
+    <label for="national-id">National ID:</label>
+    <input type="text" id="national-id" required>
+    <button type="submit">Login with eSignet (OTP)</button>
+  </form>
+
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const nationalId = document.getElementById('national-id').value;
+
+      // eSignet Login URL
+      const redirectUri = encodeURIComponent("http://localhost:3000/callback");
+      const clientId = "health-client"; // Default demo client
+      const acr = "otp"; // Use OTP for this flow
+
+      const esignetLoginUrl = `http://localhost:8080/esignet/authorize?client_id=${clientId}&scope=openid&acr_values=${acr}&response_type=code&redirect_uri=${redirectUri}&login_hint=${nationalId}`;
+
+      // Redirect to eSignet
+      window.location.href = esignetLoginUrl;
+    });
+  </script>
+</body>
+</html>
+
