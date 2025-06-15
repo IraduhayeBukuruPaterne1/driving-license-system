@@ -11,10 +11,16 @@ export default function NationalIDForm({ onSuccess }: Props) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Entered National ID:", nationalId);
+    console.log("Users from mockUsers.json:", users);
+
     const foundUser = users.find((u) => u.nationalId === nationalId);
+
     if (foundUser) {
+      console.log("✅ Found user:", foundUser);
       onSuccess(foundUser);
     } else {
+      console.log("❌ User not found");
       setError("User not found with that National ID");
     }
   };
