@@ -1,0 +1,19 @@
+[
+  {
+    "nationalId": "1199000888",
+    "name": "Liesse Dushime",
+    "email": "liesse@example.com",
+    "phone": "+257700000000",
+    "gender": "Female",
+    "dob": "2000-01-01"
+  },
+  {
+    "nationalId": "2299110777",
+    "name": "Jean Claude",
+    "email": "jean@example.com",
+    "phone": "+257711111111",
+    "gender": "Male",
+    "dob": "1995-06-15"
+  }
+]
+
