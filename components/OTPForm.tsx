@@ -6,66 +6,45 @@ interface Props {
 }
 
 export default function OTPForm({ userData, onVerified }: Props) {
-  const [phone, setPhone] = useState(userData?.phone || "");
-  const [sent, setSent] = useState(false);
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
 
-  const fakeOtp = "123456"; // Simulated OTP
-
-  const handleSend = () => {
-    setSent(true);
-    alert(`Simulated OTP sent: ${fakeOtp}`);
-  };
-
-  const handleVerify = () => {
-    if (otp === fakeOtp) {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Simulate OTP verification
+    if (otp === "123456") {
       onVerified();
     } else {
-      setError("Incorrect OTP");
+      setError("Invalid OTP code");
     }
   };
 
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-4">OTP Verification</h2>
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto"
+    >
+      <h2 className="text-xl font-semibold mb-4 text-center">OTP Verification</h2>
+      <p className="text-sm text-gray-600 text-center mb-4">
+        We sent a 6-digit OTP to <span className="font-semibold">{userData.phone}</span>
+      </p>
 
-      <label className="block mb-2">Phone Number</label>
       <input
-        type="tel"
-        value={phone}
-        onChange={(e) => setPhone(e.target.value)}
-        className="border p-2 rounded w-full mb-4"
+        type="text"
+        value={otp}
+        onChange={(e) => setOtp(e.target.value)}
+        className="border border-gray-300 p-2 w-full rounded mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        placeholder="Enter OTP"
+        required
       />
+      {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
 
-      {!sent ? (
-        <button
-          className="bg-blue-600 text-white px-4 py-2 rounded"
-          onClick={handleSend}
-        >
-          Send OTP
-        </button>
-      ) : (
-        <>
-          <label className="block mt-4 mb-2">Enter OTP</label>
-          <input
-            type="text"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-            className="border p-2 rounded w-full mb-2"
-            placeholder="Enter 6-digit OTP"
-          />
-          {error && <p className="text-red-500">{error}</p>}
-
-          <button
-            className="bg-green-600 text-white px-4 py-2 rounded mt-2"
-            onClick={handleVerify}
-          >
-            Verify OTP
-          </button>
-        </>
-      )}
-    </div>
+      <button
+        type="submit"
+        className="bg-blue-600 text-white px-4 py-2 w-full rounded hover:bg-blue-700 transition-colors"
+      >
+        Verify OTP
+      </button>
+    </form>
   );
 }
-

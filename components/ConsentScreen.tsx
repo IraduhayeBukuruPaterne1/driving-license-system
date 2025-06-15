@@ -1,50 +1,33 @@
-import { useState } from "react";
-
 interface Props {
   userData: any;
   onConsent: () => void;
 }
 
 export default function ConsentScreen({ userData, onConsent }: Props) {
-  const [consentGiven, setConsentGiven] = useState(false);
-
-  const handleConsent = () => {
-    if (consentGiven) {
-      onConsent();
-    }
-  };
-
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-4">Consent to Share Data</h2>
-      <p className="mb-4">
-        The system requests permission to access the following information:
-      </p>
-      <ul className="mb-4 list-disc list-inside">
-        <li>Name: {userData.name}</li>
-        <li>Email: {userData.email}</li>
-        <li>Phone: {userData.phone}</li>
-        <li>Gender: {userData.gender}</li>
-        <li>Date of Birth: {userData.dob}</li>
-      </ul>
+    <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg mx-auto">
+      <div className="text-center mb-6">
+        <h2 className="text-2xl font-bold text-gray-800">Consent Required</h2>
+        <p className="text-sm text-gray-600 mt-2">
+          By continuing, you agree to share the following data with the Driver's License System:
+        </p>
+      </div>
 
-      <label className="flex items-center gap-2 mb-4">
-        <input
-          type="checkbox"
-          checked={consentGiven}
-          onChange={(e) => setConsentGiven(e.target.checked)}
-        />
-        I allow this information to be shared with the service provider.
-      </label>
+      <div className="bg-gray-100 p-4 rounded mb-4">
+        <p className="text-gray-700"><strong>National ID:</strong> {userData.nationalId}</p>
+        <p className="text-gray-700"><strong>Name:</strong> {userData.name}</p>
+        <p className="text-gray-700"><strong>Email:</strong> {userData.email}</p>
+        <p className="text-gray-700"><strong>Phone:</strong> {userData.phone}</p>
+        <p className="text-gray-700"><strong>Date of Birth:</strong> {userData.dob}</p>
+        <p className="text-gray-700"><strong>Gender:</strong> {userData.gender}</p>
+      </div>
 
       <button
-        className="bg-blue-600 text-white px-4 py-2 rounded disabled:bg-gray-400"
-        onClick={handleConsent}
-        disabled={!consentGiven}
+        onClick={onConsent}
+        className="bg-green-600 text-white px-6 py-2 rounded w-full hover:bg-green-700 transition-colors"
       >
-        Continue
+        I Consent and Continue
       </button>
     </div>
   );
 }
-
