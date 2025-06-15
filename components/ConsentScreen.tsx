@@ -1,33 +1,53 @@
-interface Props {
+// components/ConsentScreen.tsx
+import React from "react";
+
+interface ConsentScreenProps {
   userData: any;
   onConsent: () => void;
 }
 
-export default function ConsentScreen({ userData, onConsent }: Props) {
+export default function ConsentScreen({ userData, onConsent }: ConsentScreenProps) {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg mx-auto">
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">Consent Required</h2>
-        <p className="text-sm text-gray-600 mt-2">
-          By continuing, you agree to share the following data with the Driver's License System:
-        </p>
+    <div className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto text-gray-800">
+      <h2 className="text-xl font-bold mb-4 text-center text-blue-700">
+        Consent to Share Your Information
+      </h2>
+
+      <p className="text-sm mb-4 text-center">
+        <strong>Health Service</strong> is requesting access to the following information:
+      </p>
+
+      <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6">
+        <h3 className="font-semibold text-sm mb-2">Essential Claims</h3>
+        <ul className="list-disc list-inside mb-4">
+          <li>Email Address (Required)</li>
+        </ul>
+
+        <h3 className="font-semibold text-sm mb-2">Voluntary Claims</h3>
+        <ul className="list-inside">
+          <li>✔️ Birthdate</li>
+          <li>✔️ Gender</li>
+          <li>✔️ Name</li>
+          <li>✔️ Phone Number</li>
+          <li>✔️ Picture</li>
+        </ul>
       </div>
 
-      <div className="bg-gray-100 p-4 rounded mb-4">
-        <p className="text-gray-700"><strong>National ID:</strong> {userData.nationalId}</p>
-        <p className="text-gray-700"><strong>Name:</strong> {userData.name}</p>
-        <p className="text-gray-700"><strong>Email:</strong> {userData.email}</p>
-        <p className="text-gray-700"><strong>Phone:</strong> {userData.phone}</p>
-        <p className="text-gray-700"><strong>Date of Birth:</strong> {userData.dob}</p>
-        <p className="text-gray-700"><strong>Gender:</strong> {userData.gender}</p>
+      <div className="flex justify-between gap-4">
+        <button
+          className="w-full py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
+          onClick={() => alert("You cancelled consent.")}
+        >
+          Cancel
+        </button>
+        <button
+          className="w-full py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
+          onClick={onConsent}
+        >
+          Allow
+        </button>
       </div>
-
-      <button
-        onClick={onConsent}
-        className="bg-green-600 text-white px-6 py-2 rounded w-full hover:bg-green-700 transition-colors"
-      >
-        I Consent and Continue
-      </button>
     </div>
   );
 }
+

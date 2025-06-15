@@ -1,3 +1,4 @@
+// components/OTPForm.tsx
 import { useState } from "react";
 
 interface Props {
@@ -11,22 +12,24 @@ export default function OTPForm({ userData, onVerified }: Props) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate OTP verification
     if (otp === "123456") {
       onVerified();
     } else {
-      setError("Invalid OTP code");
+      setError("Invalid OTP. Please try again.");
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto"
+      className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto"
     >
-      <h2 className="text-xl font-semibold mb-4 text-center">OTP Verification</h2>
-      <p className="text-sm text-gray-600 text-center mb-4">
-        We sent a 6-digit OTP to <span className="font-semibold">{userData.phone}</span>
+      <h2 className="text-xl font-semibold mb-4 text-center text-blue-700">
+        OTP Verification
+      </h2>
+
+      <p className="text-sm text-gray-600 mb-2 text-center">
+        An OTP was sent to <strong>{userData.phone}</strong>
       </p>
 
       <input
@@ -34,17 +37,19 @@ export default function OTPForm({ userData, onVerified }: Props) {
         value={otp}
         onChange={(e) => setOtp(e.target.value)}
         className="border border-gray-300 p-2 w-full rounded mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        placeholder="Enter OTP"
+        placeholder="Enter 6-digit OTP"
         required
       />
+
       {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
 
       <button
         type="submit"
-        className="bg-blue-600 text-white px-4 py-2 w-full rounded hover:bg-blue-700 transition-colors"
+        className="bg-blue-600 text-white px-4 py-2 w-full rounded hover:bg-blue-700 transition"
       >
-        Verify OTP
+        Verify
       </button>
     </form>
   );
 }
+
