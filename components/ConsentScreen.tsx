@@ -1,53 +1,76 @@
-// components/ConsentScreen.tsx
-import React from "react";
+import { useState } from 'react';
 
-interface ConsentScreenProps {
-  userData: any;
-  onConsent: () => void;
-}
+const ConsentScreen = () => {
+  const [consents, setConsents] = useState({
+    id: false,
+    phone: false,
+    fingerprint: false,
+  });
 
-export default function ConsentScreen({ userData, onConsent }: ConsentScreenProps) {
+  const handleToggle = (field: keyof typeof consents) => {
+    setConsents((prev) => ({ ...prev, [field]: !prev[field] }));
+  };
+
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto text-gray-800">
-      <h2 className="text-xl font-bold mb-4 text-center text-blue-700">
-        Consent to Share Your Information
-      </h2>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4">
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md space-y-6">
+        <h2 className="text-2xl font-bold text-center text-blue-600">Consent Required</h2>
+        <p className="text-center text-gray-600">Please allow access to the following data to continue:</p>
 
-      <p className="text-sm mb-4 text-center">
-        <strong>Health Service</strong> is requesting access to the following information:
-      </p>
+        {/* Toggle 1 */}
+        <div className="flex justify-between items-center border-b pb-2">
+          <span className="text-gray-700">Share National ID Details</span>
+          <label className="relative inline-flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              checked={consents.id}
+              onChange={() => handleToggle('id')}
+              className="sr-only peer"
+            />
+            <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:bg-blue-600 transition-all"></div>
+            <div className="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-md transform peer-checked:translate-x-full transition-all"></div>
+          </label>
+        </div>
 
-      <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6">
-        <h3 className="font-semibold text-sm mb-2">Essential Claims</h3>
-        <ul className="list-disc list-inside mb-4">
-          <li>Email Address (Required)</li>
-        </ul>
+        {/* Toggle 2 */}
+        <div className="flex justify-between items-center border-b pb-2">
+          <span className="text-gray-700">Share Phone Number</span>
+          <label className="relative inline-flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              checked={consents.phone}
+              onChange={() => handleToggle('phone')}
+              className="sr-only peer"
+            />
+            <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:bg-blue-600 transition-all"></div>
+            <div className="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-md transform peer-checked:translate-x-full transition-all"></div>
+          </label>
+        </div>
 
-        <h3 className="font-semibold text-sm mb-2">Voluntary Claims</h3>
-        <ul className="list-inside">
-          <li>✔️ Birthdate</li>
-          <li>✔️ Gender</li>
-          <li>✔️ Name</li>
-          <li>✔️ Phone Number</li>
-          <li>✔️ Picture</li>
-        </ul>
-      </div>
+        {/* Toggle 3 */}
+        <div className="flex justify-between items-center">
+          <span className="text-gray-700">Share Fingerprint Data</span>
+          <label className="relative inline-flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              checked={consents.fingerprint}
+              onChange={() => handleToggle('fingerprint')}
+              className="sr-only peer"
+            />
+            <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:bg-blue-600 transition-all"></div>
+            <div className="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-md transform peer-checked:translate-x-full transition-all"></div>
+          </label>
+        </div>
 
-      <div className="flex justify-between gap-4">
-        <button
-          className="w-full py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
-          onClick={() => alert("You cancelled consent.")}
-        >
-          Cancel
-        </button>
-        <button
-          className="w-full py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
-          onClick={onConsent}
-        >
-          Allow
-        </button>
+        {/* Buttons */}
+        <div className="flex justify-end space-x-4 pt-6">
+          <button className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">Cancel</button>
+          <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Allow</button>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default ConsentScreen;
 
